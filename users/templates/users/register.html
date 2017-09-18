@@ -1,0 +1,20 @@
+{% extends 'users/base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+  <h3>注册帐号:<h3>
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-8">
+<form method='post' action="{% url 'users:register' %}" class='form' enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form user_form %}
+  {% bootstrap_form profile_form %}
+  {% buttons %}
+    <button name='submit' class='btn btn-primary'>注册</button>
+  {% endbuttons %}
+  <input type='hidden' name='next' value="{% url 'users:regsuc' %}">
+</form>
+</div>
+{% endblock content %}

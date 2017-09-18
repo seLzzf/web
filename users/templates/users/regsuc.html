@@ -1,0 +1,6 @@
+{% extends 'users/base.html' %}
+
+{% block header %}<h4>注册成功<h4>{% endblock header %}
+{% block content %}
+<a href="{% url 'users:login' %}">返回登录页面</a>
+{% endblock content %}

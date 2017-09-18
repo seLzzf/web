@@ -1,0 +1,71 @@
+{% extends 'blogs/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block header %}Test{% endblock header %}
+
+{% block content %}
+
+<div class='container'>
+
+  <form name='my form' action="{% url 'blogs:test' %}" method='GET'>
+<!-- <div><label for='user_id'>Your ID:</label>
+	<input id='user_id' type='text' name='user_id'>
+	<label for='user_pass'>Your password:</label>
+	<input id='user_pass' type='password' name='user_pass'><br/>
+  </div> -->
+  <div>	
+	<label for='byear'>出生日期:</label>
+    <select name='byear'>
+      {% for year in years %}
+        <option value='{{ year }}'>{{ year }}</option>
+	  {% endfor %}
+    </select><br/>
+  </div>
+  <div>
+	<input type='checkbox' name='colors' value='Green'>Green
+	<input type='checkbox' name='colors' value='red'>red
+	<input type='checkbox' name='colors' value='blue'>blue
+	<input type='checkbox' name='colors' value='yellow'>yellow
+	<br/>
+  </div>
+  <div>
+	<input type='radio' name='color' value='Green'>Green
+	<input type='radio' name='color' value='red'>red
+	<input type='radio' name='color' value='blue'>blue
+	<input type='radio' name='color' value='black'>black
+	<br/>
+  </div>
+  <div>
+	<input type='reset' value='重置信息'>
+	<input type='submit' value='登录'>
+	<br/>
+  </div>
+
+  </form>
+  <div>
+    Your ID:{{ user_id | default:'未输入ID' }} <br/>
+    多选框输入:
+    {% for color in colors %}
+    {{ color }}
+    {% empty %}
+    None 
+    {% endfor %}
+  </div>
+  <div>
+    单选框输入:
+    {{ color }}
+  </div>
+  <div>
+    {% if verified %}
+      <em>成功登录</em>
+    {% else %}
+      <em>登录失败</em>
+    {% endif %}
+  </div>
+
+
+
+</div>
+
+{% endblock content %}

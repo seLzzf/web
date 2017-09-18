@@ -1,0 +1,31 @@
+{% extends 'blogs/base.html' %}
+{% block header %}{% endblock header %}
+
+{% block content %}
+
+<h3>在主题/书名中搜索结果:</h3>
+{% for search_theme in theme_list %}
+  <li>
+    <a href="{% url 'blogs:theme' search_theme.owner.id search_theme.id %}">{{search_theme.title}}</a>
+  </li>
+{% empty %}
+  <p>抱歉，没有搜索到相关结果。</p>
+{% endfor %}
+
+<h3>在用户名中搜索结果:</h3>
+{% for search_user in user_list %}
+  <li>
+    <a href="{% url 'users:userinfo' search_user.id %}">{{search_user.username}}</a>
+  </li>
+{% empty %}
+  <p>抱歉，没有搜索到相关结果。</p>
+{% endfor %}
+
+<h3>在用户ID中搜索结果:</h3>
+{% for search_user in user_id_list %}
+  <li><a href="{% url 'users:userinfo' search_user.id %}">{{search_user.username}}</a></li>
+{% empty %}
+  <p>抱歉，没有搜索到相关结果。</p>
+{% endfor %}
+
+{% endblock content %}

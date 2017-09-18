@@ -1,0 +1,25 @@
+{% extends 'users/base.html' %}
+{% load bootstrap3 %} 
+<!-- base.html中引入之后,继承模版并没有引入,需要重新引入    -->
+
+{% block header %}
+  <h2>登录selzzf的网站</h2>
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-8">
+{% if form.errors %}
+  <p><h2>Your username and password didn't match. Please try again.</h2></p>
+{% endif %}
+  <form action="{% url 'users:login' %}" method='post' class='form'>
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+	<button name='submit' class='btn btn-primary'>登录</button> &nbsp
+	<a href="{% url 'password_reset' %}">忘记密码?</a>
+	{% endbuttons %}
+
+	<input type='hidden' name='next' value="{% url 'blogs:index' %}">
+  </form>
+</div>
+{% endblock content %}

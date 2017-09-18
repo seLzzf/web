@@ -1,0 +1,54 @@
+{% extends "blogs/base.html" %}  
+{% load bootstrap3 %}
+{% block header %}
+<div>
+  <h4>留言板:</h4>
+  {% if user == page_user %}
+    {% if T_M.设为私密 %}
+	  当前权限:仅自己可见<a href="{% url 'message:message_privacy' %}" style="float:right;">设为公开</a>
+	{% else %}
+	  当前权限:所有人可见<a href="{% url 'message:message_privacy' %}" style="float:right;">设为私密</a>
+	{% endif %}
+  {% endif %}  
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class='col-md-8'>
+
+  {% for message in messages %}
+  <div class='panel panel-default'>
+    <div class='panel-body'>
+	  <h4>{{ message.message|linebreaks }}<h4>
+    </div>
+    <div class='panel-heading'>
+	  <a href="{% url 'users:userinfo' message.giver.id %}">{{message.giver}}</a>
+	  <span style="float:right;">
+        {{message.date_added|date:'Y-m-d H:i:s'}}&nbsp&nbsp&nbsp
+	    &nbsp&nbsp
+	    {% if page_user == request_user %}
+	      <a href="">删除</a>
+	    {% endif %}
+	  </span>
+    </div>
+  </div>
+  {% empty %}
+    <h3><li>暂时还没有评论。</li></h3>
+  {% endfor %}
+  
+<hr/>
+  
+  <div>
+  <h4></h4>
+  <form method='POST' action="{% url 'message:message' page_user.id %}">
+    {% csrf_token %}
+    {% bootstrap_form message_form %}
+    {% buttons %}
+	<button name='submit' class='btn btn-primary'>提交</button>
+	{% endbuttons %}
+  </form>
+  </div>
+  
+</div>
+  
+{% endblock content %}

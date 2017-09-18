@@ -1,0 +1,33 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% block header %}
+  <h2>主题/书名:</h2>
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-9">
+<ul>
+  {% for theme in themes %}
+	<li><h3>
+	  <a href="{% url 'blogs:theme' theme.owner.id theme.id %}">{{theme.title}}</a>
+	  <div style="float:right;">
+	    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		{{theme.date_added|date:'m-d'}}
+	  </div>
+	  <div style="float:right;">
+	    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<img src="{% static 'images/views.jpg.' %}"/>{{theme.views}}
+	  </div>
+	  <a style="float:right;" href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
+	</h3></li>
+  {% empty %}
+	<li>暂时还没有人发表主题。</li>
+  {% endfor %}
+</ul>
+  {% if page_user == user %}
+  <h3>
+    <a href="{% url 'blogs:new_theme' %}">添加书籍/主题</a>
+  </h3>
+  {% endif %}
+</div>  
+{% endblock content %}

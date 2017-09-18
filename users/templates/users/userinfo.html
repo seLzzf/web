@@ -1,0 +1,56 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+  
+{% if page_userinfo.sex == '男' %}
+  <h3 style="margin-top: 0px;">他:</h3>
+{% else %}
+  <h4 style="margin-top: 0px;">她:</h4>
+{% endif %}
+{% if user == page_user %}
+  <p style="margin-bottom:1px " align="right">
+    <a href="{% url 'users:alterinfo' user.id %}"><button class="btn btn-default">修改信息</button></a>
+  </p>
+{% else %}
+  <p style="margin-bottom:1px " align="right">
+      <a href="{% url 'users:follow' page_user.id %}">
+	    {% if the_follower in followers %}
+	    <button class="btn btn-default">取消关注</button>
+	    {% else %}
+	    <button class="btn btn-default">关注</button>
+	    {% endif %}
+	  </a>
+  </p>
+{% endif %}
+
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-5">
+  <div class='panel panel-default'>
+	<div class='panel-body'>
+	  <form method='post' class='form' enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form info_read_form %}
+       </form>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-7">
+  <div class='panel panel-default'>
+    <h4>
+    <div class='panel-body'>
+	  {% if page_userinfo.sex == '男' %}他{% else %}她{% endif %}的主题 : <a href="{% url 'blogs:themes' page_user.id %}" >{{ themes.count }}</a>
+    </div>
+	<div class='panel-body'>
+	  它的关注 : {{ focusers.count }}
+    </div>
+	<div class='panel-body'>
+	  它的粉丝 : {{ followers.count }}
+    </div>
+	</h4>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+{% block header %}
+  <h2>{{ theme.title }}:</h2>
+  <h4>浏览:{{theme.views}} &nbsp 评论:{{comments.count}}
+    <!-- <a href='' style="float:right;"> -->
+	<img id='praise' src="{% static 'images/praise1.png' %}"></a>
+  </h4>
+  
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-8">
+  <p><h4>
+    {% if page_user == request_user %}
+      <a href="{% url 'blogs:new_note' theme.id %}">add note</a>
+      {% if theme.设为私密 %}
+        <a href="{% url 'blogs:privacy' theme.id %}">设为公开</a>
+      {% else %}
+        <a href="{% url 'blogs:privacy' theme.id %}">设为私密</a> 
+      {% endif %}
+    {% endif %}
+  </h4></p>
+  
+{% for note in notes_page %}
+  <div class='panel panel-default'>
+    <div class='panel-body'>
+	  <h4>{{ note.text|linebreaks }}</h4>
+    </div>
+    <div class='panel-heading'>
+        {{note.date_added|date:'Y-m-d H:i:s'}} &nbsp
+	  {% if page_user == request_user %}
+	    <a style="float:right;" href="{% url 'blogs:delete_note' theme.id note.id %}">删除</a>
+	  {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <h3><li>there have no note in here.let's add your first note!</li></h3>
+{% endfor %}
+</div>
+
+<div class="col-md-4">
+  <h4>评论:</h4>
+  {% for comment in comments %}
+  <div class='panel panel-default'>
+    <div class='panel-body'>
+	      <h4>
+      {{ comment.message|linebreaks }}
+	   </hr>
+	      <h4>
+    </div>
+    <div class='panel-heading'>
+	  <a href="">——{{comment.publisher}}</a>
+      <div style="float:right;">{{comment.date_added|date:'Y-m-d H:i:s'}}
+	  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  {% if page_user == request_user %}
+	    <a href="">删除</a>
+	  {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% empty %}
+  <h3><li>暂时还没有评论。</li></h3>
+  {% endfor %}
+  
+  <div>
+  <h4>发表评论:</h4>
+  <form method='POST' action="{% url 'comments:handle_comment' theme.id %}">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    {% buttons %}
+	<button name='submit' class='btn btn-primary'>提交</button>
+	{% endbuttons %}
+  </form>
+  </div>
+  
+</div>
+
+<div class='pagination col-md-12'>
+  {% if notes_page.has_previous %}
+    <a href="?page_n={{ notes_page.previous_page_number }}">上一页</a>
+  {% endif %}
+  <span class='current'>第{{ notes_page.number }}页/共{{ notes_pages.num_pages }}页</span>
+  {% if notes_page.has_next %}
+    <a href="?page_n={{ notes_page.next_page_number }}">下一页</a>
+  {% endif %}
+</div>
+
+<script src="{% static 'javascript/test.js' %}"></script>
+
+{% endblock content %}

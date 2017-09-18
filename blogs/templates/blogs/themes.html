@@ -1,0 +1,31 @@
+{% extends "blogs/base.html" %}
+{% block header %}
+  <h2>主题/书名:</h2>
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-7">
+<ul>
+  {% for theme in themes %}
+	<li>
+	<h3><a href="{% url 'blogs:theme' page_user.id theme.id %}">{{theme.title}}</a>
+	<div style="float:right;">
+	    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		{{theme.date_added|date:'m-d'}}
+	</div>
+  {% if page_user == request_user %}
+	<a style="float:right;" href="{% url 'blogs:delete_theme' theme.id %}">删除</a>
+	</li>
+  {% endif %}
+  </h3>
+  {% empty %}
+	<li>赶紧写下你的第一个主题吧。<li>
+  {% endfor %}
+</ul>
+<h3>
+  {% if page_user == user %}
+    <a href="{% url 'blogs:new_theme' %}">添加书籍/主题</a>
+  {% endif %}
+</h3>
+</div>
+{% endblock content %}
