@@ -1,7 +1,7 @@
 {% extends "blogs/base.html" %}
 {% load static %}
 {% block header %}
-  <h2>主题/书名:</h2>
+  <h2>随便看看:</h2>
 {% endblock header %}
 
 {% block content %}
@@ -16,7 +16,7 @@
 	  </div>
 	  <div style="float:right;">
 	    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<img src="{% static 'images/views.jpg.' %}"/>{{theme.views}}
+		<img src="{% static 'images/views.jpg' %}"/>{{theme.views}}
 	  </div>
 	  <a style="float:right;" href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
 	</h3></li>
