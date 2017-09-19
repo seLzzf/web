@@ -25,8 +25,8 @@ def get_page_user(request,user_id):
 def index(request):
 	themes=Theme.objects.filter(设为私密=False)
 	page_user=request.user
-	userinfo=Userinfo.objects.get(user=page_user)
-	context={'themes':themes,'page_user':page_user,'userinfo':userinfo}
+	request_userinfo=Userinfo.objects.get(user=page_user)
+	context={'themes':themes,'page_user':page_user,'request_userinfo':request_userinfo}
 	return render(request,'blogs/index.html',context)
 @login_required
 def themes(request,user_id):
@@ -40,7 +40,7 @@ def themes(request,user_id):
 			themes=Theme.objects.filter(owner=request.user).order_by('date_added') 
 		else:
 			themes=Theme.objects.filter(owner=page_user,设为私密=False).order_by('date_added')
-	context={'themes':themes,'page_user':page_user,'request_user':request_user}
+	context={'themes':themes,'page_user':page_user,'request_user':request_user,'request_userinfo':request_userinfo}
 	return render(request,'blogs/themes.html',context)
 @login_required
 def theme(request,user_id,theme_id):

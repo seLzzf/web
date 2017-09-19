@@ -1,6 +1,12 @@
 {% extends "blogs/base.html" %}
 {% block header %}
-  <h2>主题/书名:</h2>
+  {% if page_user == request_user %}
+  <h2>我的主题:</h2>
+  {% elif request_userinfo.sex == '男' %}
+      <h2>他的主题:<h2>
+  {% else %}
+      <h2>她的主题:<h2>
+  {% endif %}
 {% endblock header %}
 
 {% block content %}
