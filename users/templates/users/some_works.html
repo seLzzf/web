@@ -1,17 +1,49 @@
 {% extends 'users/base.html' %}
 {% load bootstrap3 %}
 {% load static %}
+{% load diy_filter %}
 
-{% block header %}
-  
-{% endblock header %}
+{% block header %}{% endblock header %}
 
 {% block content %}
 
-<h4>爬取贴吧头像:</h4>
-<img width="1120" height="630" src="{% static 'images/贴吧头像.jpg' %}"/>
+<div>
+  <h4>魔兽rpg地图每日更新:</h4>
+  <table class='table table-hover table-striped table-border'>
+    <thead>
+	  <tr>
+	  <th>日期</th>
+	  <th>地图</th>
+	  <th>链接</th>
+	  <th>类型</th>
+	  </tr>
+	</thead>
+	
+	<tbody>
+	{% for list in lists %}
+	<tr>
+      <td>{{ list | x_in_list:0 }}</td>
+	  <td><a href="{{ list | x_in_list:2 }}">{{ list | x_in_list:1 }}<a></td>
+	  <td>{{ list | x_in_list:2 }}</td>
+	  <td>{{ list | x_in_list:3 }}</td>
+	</tr>
+	{% empty %}
+	{% endfor %}
+    </tbody>
+  </table>
+  <small style="float:right;">——爬取自 http://war3.uuu9.com </small>
+</div>
+
 <Br/><Br/>
-<h4>爬取QQ好友头像:</h4>
-<img src="{% static 'images/QQ好友头像.jpg' %}"/>
+
+<div>
+  <h4>爬取贴吧头像:</h4>
+  <img width="1120" height="630" src="{% static 'images/贴吧头像.jpg' %}"/>
+
+<Br/><Br/>
+
+  <h4>爬取QQ好友头像:</h4>
+  <img src="{% static 'images/QQ好友头像.jpg' %}"/>
+</div>
 
 {% endblock content %}

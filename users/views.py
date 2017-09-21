@@ -69,7 +69,9 @@ def register_confirm(request):
 			user.delete()
 			return HttpResponse('验证码有误，请检查输入，或重新发送。')
 def some_works(request):
-	context={}
+	from .war3_daily_map import get_map
+	lists=get_map()
+	context={'lists':lists}
 	return render(request,'users/some_works.html',context)
 def userinfo(request,user_id):
 	page_user=User.objects.get(id=user_id)
