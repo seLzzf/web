@@ -9,11 +9,16 @@
 <div class='container'>
 
   <form name='my form' action="{% url 'blogs:test' %}" method='GET'>
-<!-- <div><label for='user_id'>Your ID:</label>
-	<input id='user_id' type='text' name='user_id'>
+  <div>
+    <label for='user_id'>Your ID:</label>
+	<input class='form-control' id='user_id' type='text' name='user_id'>
 	<label for='user_pass'>Your password:</label>
-	<input id='user_pass' type='password' name='user_pass'><br/>
-  </div> -->
+	<input id='user_pass' type='password' name='user_pass'>
+    <button name='submit' class='btn btn-primary active' disabled='disabled'>OK</button>
+  </div>
+  </form>
+  
+<br/>
   <div>	
 	<label for='byear'>出生日期:</label>
     <select name='byear'>
