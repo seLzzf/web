@@ -33,11 +33,11 @@
 		  <li><a href="">相册</a></li>
 		  <li><a href="{% url 'message:message' page_user.id %}">留言板</a></li>
 		  <li><a href="{% url 'blogs:test' %}">test</a></li>
-		  <li class='search'> 
+		  <li style='margin-top:10px' class='search'> 
 		    <form method='post' action="{% url 'blogs:search' %}">
 			{% csrf_token %}
-		    <input name='search' type='search' placeholder='搜索关键字'>
-		    <input type='submit' value='搜索'>
+		    <input name='search' type='search' placeholder='搜索关键字/用户'>
+		    <input class='btn' type='submit' value='搜索'>
 		    </form>
 		  </li>
 		</ul>
