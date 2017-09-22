@@ -44,6 +44,14 @@ def themes(request,user_id):
 	return render(request,'blogs/themes.html',context)
 @login_required
 def theme(request,user_id,theme_id):
+	if request.is_ajax():
+		try:
+			theme=Theme.objects.get(id=theme_id)
+			theme.increase_praises()
+			praises=theme.praises
+			return HttpResponse(praises)
+		except:
+			return HttpResponse('主题不存在')
 	request_user,request_userinfo=get_request_user(request)
 	try:
 		page_user,page_userinfo=get_page_user(request,user_id)

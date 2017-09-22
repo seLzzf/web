@@ -7,11 +7,14 @@ class Theme(models.Model):
 	date_added=models.DateTimeField(auto_now_add=True)
 	设为私密=models.BooleanField(default=False)
 	views=models.PositiveIntegerField(default=0)
+	praises=models.PositiveIntegerField(default=0)
 	
+	def increase_praises(self):
+		self.praises+=1
+		self.save(update_fields=['praises'])
 	def increase_views(self):
 		self.views+=1
 		self.save(update_fields=['views'])
-	
 	def __str__(self):
 		return self.title
 		

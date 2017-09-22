@@ -3,9 +3,11 @@
 {% load static %}
 {% block header %}
   <h2>{{ theme.title }}:</h2>
-  <h4>浏览:{{theme.views}} &nbsp 评论:{{comments.count}}
-    <!-- <a href='' style="float:right;"> -->
-	<img id='praise' src="{% static 'images/praise1.png' %}"></a>
+  <h4>
+  <li style='display:inline-block'>浏览:{{theme.views}} &nbsp </li>
+  <li style='display:inline-block'>评论:{{comments.count}} &nbsp </li>
+  <li id='praise' style='display:inline-block'>点赞数:{{theme.praises}} </li>
+  <a><img style="float:right;" id='praise_pic' src="{% static 'images/praise1.png' %}"></a>
   </h4>
   
 {% endblock header %}
