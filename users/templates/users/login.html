@@ -9,7 +9,7 @@
 {% block content %}
 <div class="col-md-8">
 {% if form.errors %}
-  <p><h2>Your username and password didn't match. Please try again.</h2></p>
+  <p><h3>用户名或密码错误。</h3></p>
 {% endif %}
   <form action="{% url 'users:login' %}" method='post' class='form'>
 	{% csrf_token %}

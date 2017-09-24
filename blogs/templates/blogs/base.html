@@ -45,7 +45,7 @@
 		  {% if user.is_authenticated %}
 			<li><a href="{% url 'users:userinfo' user.id %}">Hello,{{ user.username }}.</a></li>
 			<li><a href="{% url 'users:userinfo' user.id %}">我的消息</a></li>
-			<li><img src="{{ request_userinfo.pic.url }}" alt='pic' height="40" width="40"/></li>
+			<li><img style='margin-top:5px' src="{{ request_userinfo.pic.url }}" alt='pic' height="40" width="40"/></li>
 			<li><a href="{% url 'users:logout' %}">退出</a></li>
 		  {% endif %}
 		</ul> 

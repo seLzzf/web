@@ -81,7 +81,7 @@ def theme(request,user_id,theme_id):
 	    #comment
 	comments_pages=Paginator(comments,5)
 	page_num_comments=request.GET.get('page_c')
-	context={'theme':theme,'page_user':page_user,'request_user':request_user,'comments':comments,'notes_page':notes_page,'notes_pages':notes_pages,'comment_form':comment_form}
+	context={'theme':theme,'page_user':page_user,'request_user':request_user,request_userinfo:'request_userinfo','comments':comments,'notes_page':notes_page,'notes_pages':notes_pages,'comment_form':comment_form}
 	return render(request,'blogs/theme.html',context)
 @login_required
 def new_theme(request):

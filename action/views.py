@@ -21,7 +21,7 @@ def action(request,user_id):
 			themes[n]=themes[n]|themes[n-1]
 		n+=1
 	try:
-		themes=themes[n-1].order_by('date_added')
+		themes=themes[n-1].filter(设为私密=False).order_by('date_added')
 	except:
 		return HttpResponse('no focus')
 		
