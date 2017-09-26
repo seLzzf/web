@@ -23,7 +23,11 @@ def get_page_user(request,user_id):
 
 @login_required
 def index(request):
-	themes=Theme.objects.filter(设为私密=False)
+	try:
+		sort=request.GET['sort']
+		themes=Theme.objects.filter(设为私密=False).order_by('-'+sort)
+	except:
+		themes=Theme.objects.filter(设为私密=False).order_by('-date_added')
 	page_user=request.user
 	request_userinfo=Userinfo.objects.get(user=page_user)
 	context={'themes':themes,'page_user':page_user,'request_userinfo':request_userinfo}

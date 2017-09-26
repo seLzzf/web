@@ -5,28 +5,40 @@
 {% endblock header %}
 
 {% block content %}
-<div class="col-md-9">
-<ul>
-  {% for theme in themes %}
-	<li><h3>
-	  <a href="{% url 'blogs:theme' theme.owner.id theme.id %}">{{theme.title}}</a>
-	  <div style="float:right;">
-	    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		{{theme.date_added|date:'m-d'}}
-	  </div>
-	  <div style="float:right;">
-	    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<img src="{% static 'images/views.jpg' %}"/>{{theme.views}}
-	  </div>
-	  <a style="float:right;" href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
-	</h3></li>
-  {% empty %}
-	<li>暂时还没有人发表主题。</li>
-  {% endfor %}
-</ul>
+
+<div><h3>
+  <table class='table table-hover table-striped'>
+    <thead>
+	  <tr>
+	    <th>文章</th>
+		<th>用户</th>
+		<th>浏览<a href="?sort=views">↓</a></th>
+		<th>发表日期<a href="?sort=date_added">↓</a></th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {% for theme in themes %}
+	  <tr>
+		<td>
+		  <a href="{% url 'blogs:theme' theme.owner.id theme.id %}">{{theme.title}}</a>
+		</td>
+		<td>
+		  <a href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
+		</td>
+		<td>
+		  <img src="{% static 'images/views.jpg' %}"/>{{theme.views}}
+		</td>
+		<td>{{theme.date_added|date:'m-d'}}</td>
+	  </tr>
+	  {% empty %}
+	    <h3>服务器好像出错了,请刷新重试或诊断网络</h3>
+	  {% endfor %}
+	</tbody>
+</h3></div>
+
   {% if page_user == user %}
   <h3>
-    <a href="{% url 'blogs:new_theme' %}">添加书籍/主题</a>
+    <a href="{% url 'blogs:new_theme' %}">添加主题</a>
   </h3>
   {% endif %}
 </div>  
