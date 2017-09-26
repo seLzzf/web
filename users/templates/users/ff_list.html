@@ -1,0 +1,23 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+  {% if followers %}
+    {% for follower in followers %}
+	  <li><a href="{% url 'users:userinfo' follower.follower.id %}">{{follower.follower}}</li></a>
+	{% empty %}
+	  <h3>暂未关注任何用户</h3>
+	{% endfor %}
+  {% elif focusers %}
+    {% for focuser in focusers %}
+	  <li><a href="{% url 'users:userinfo' focuser.focus.id %}">{{focuser.focus}}</li></a>
+	{% empty %}
+	  <h3>暂未关注任何用户</h3>
+	{% endfor %}
+  {% else %}
+	<h3>what happend?</h3>
+  {% endif %}
+{% endblock content %}

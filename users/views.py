@@ -86,6 +86,17 @@ def userinfo(request,user_id):
 		the_follower=False
 	context={'page_user':page_user,'themes':themes,'page_userinfo':page_userinfo,'info_read_form':info_read_form,'followers':followers,'the_follower':the_follower,'focusers':focusers}
 	return render(request,'users/userinfo.html',context)
+def ff_list(request,user_id):
+	page_user=User.objects.get(id=user_id)
+	if request.GET['f'] == 'focusers':
+		focusers=Follower.objects.filter(follower=page_user)
+		context={'focusers':focusers,'page_user':page_user}
+	elif request.GET['f'] == 'followers':
+		followers=Follower.objects.filter(focus=page_user)
+		context={'followers':followers,'page_user':page_user}
+	else:
+		return HttpResponse('some errors')
+	return render(request,'users/ff_list.html',context)
 def alterinfo(request,user_id):
 	user=User.objects.get(id=user_id)
 	page_user=user

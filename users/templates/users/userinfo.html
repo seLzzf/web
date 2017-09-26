@@ -45,10 +45,10 @@
 	  {% if page_userinfo.sex == '男' %}他{% else %}她{% endif %}的主题 : <a href="{% url 'blogs:themes' page_user.id %}" >{{ themes.count }}</a>
     </div>
 	<div class='panel-body'>
-	  它的关注 : {{ focusers.count }}
+	  它的关注 : <a href="{% url 'users:ff_list' page_user.id %}?f=focusers">{{ focusers.count }}</a>
     </div>
 	<div class='panel-body'>
-	  它的粉丝 : {{ followers.count }}
+	  它的粉丝 : <a href="{% url 'users:ff_list' page_user.id %}?f=followers">{{ followers.count }}</a>
     </div>
 	</h4>
   </div>
