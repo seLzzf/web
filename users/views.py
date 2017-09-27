@@ -27,18 +27,14 @@ def register(request):
 		profile_form=UserProfileForm()
 	else:
 		user_form=UserForm(data=request.POST)
-		profile_form=UserProfileForm(request.POST,request.FILES)
-		if user_form.is_valid() and profile_form.is_valid():
+		if user_form.is_valid():
 			user=user_form.save()
-			userinfo=profile_form.save(commit=False)
 			user.is_active=False
 			user.save()
-			userinfo.user=user
-			userinfo.save()	
 			
 			email=request.POST.get('email')
 			email_num=random.randint(100000,999999)
-			
+			Userinfo.objects.create(user=user)
 			user_id=user.id
 			try:
 				send_mail('欢迎注册seLzzf的网站','欢迎注册seLzzf的网站,您的注册验证码是: '+str(email_num)+' .','271938333@qq.com',[email],fail_silently=False)
@@ -51,7 +47,7 @@ def register(request):
 			return render(request,'users/register_confirm.html',context)
 		else:
 			print('some errors')
-	context={'user_form':user_form,'profile_form':profile_form}
+	context={'user_form':user_form}
 	return render(request,'users/register.html',context)
 def register_confirm(request):
 	if request.method=='POST':

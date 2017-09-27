@@ -10,7 +10,6 @@
 <form method='post' action="{% url 'users:register' %}" class='form' enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form user_form %}
-  {% bootstrap_form profile_form %}
   {% buttons %}
     <button name='submit' class='btn btn-primary'>注册</button>
   {% endbuttons %}

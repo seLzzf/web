@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Theme(models.Model):
 	owner=models.ForeignKey(User)
-	title=models.CharField('标题',max_length=15)
+	title=models.CharField('标题',max_length=20)
 	date_added=models.DateTimeField(auto_now_add=True)
 	设为私密=models.BooleanField(default=False)
 	views=models.PositiveIntegerField(default=0)
@@ -19,8 +19,8 @@ class Theme(models.Model):
 		return self.title
 		
 class Note(models.Model):
-	title=models.ForeignKey(Theme)#"Note.title" must be a "Theme" instance.
-	text=models.TextField('你想说的话...')
+	title=models.ForeignKey(Theme)
+	text=models.TextField('写下....')
 	date_added=models.DateTimeField(auto_now_add=True)
 	def __str__(self):
 		return self.title.title
