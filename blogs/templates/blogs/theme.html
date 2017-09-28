@@ -16,7 +16,7 @@
 <div class="col-md-8">
   <p><h4>
     {% if page_user == request_user %}
-      <a href="{% url 'blogs:new_note' theme.id %}">add note</a>
+      <a href="{% url 'blogs:new_note' theme.id %}">添加..</a>
       {% if theme.设为私密 %}
         <a href="{% url 'blogs:privacy' theme.id %}">设为公开</a>
       {% else %}

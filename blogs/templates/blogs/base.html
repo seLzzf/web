@@ -30,7 +30,6 @@
 		  {% if user == page_user %}
 		  <li><a href="{% url 'action:action' user.id %}">我的关注</a></li>
 		  {% endif %}
-		  <li><a href="">相册</a></li>
 		  <li><a href="{% url 'message:message' page_user.id %}">留言板</a></li>
 		  <li><a href="{% url 'blogs:test' %}">test</a></li>
 		  <li style='margin-top:10px' class='search'> 
@@ -44,7 +43,7 @@
 		<ul class='nav navbar-nav navbar-right'>
 		  {% if user.is_authenticated %}
 			<li><a href="{% url 'users:userinfo' user.id %}">Hello,{{ user.username }}.</a></li>
-			<li><a href="{% url 'users:userinfo' user.id %}">我的消息</a></li>
+			<li><a href="{% url 'users:news' %}">我的消息</a></li>
 			<li><img style='margin-top:5px' src="{{ request_userinfo.pic.url }}" alt='pic' height="40" width="40"/></li>
 			<li><a href="{% url 'users:logout' %}">退出</a></li>
 		  {% endif %}

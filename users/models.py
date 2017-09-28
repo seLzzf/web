@@ -24,8 +24,8 @@ class Follower(models.Model):
 	focus=models.ForeignKey(User,related_name='focus')
 	follower=models.ForeignKey(User,related_name='follower',blank=True)
 		
-# class Friends(models.Model):
-	# owner=models.ForeignKey(User,related_name='owner')
-	# friends=models.ForeignKey(User,related_name='friends',blank=True)
-	# status=models.BooleanField(default='False')
-	
+class News(models.Model):
+	user=models.ForeignKey(User)
+	news=models.TextField('消息',blank=True)
+	status=models.BooleanField(default=True)
+	date_added=models.DateTimeField(auto_now_add=True,blank=True)

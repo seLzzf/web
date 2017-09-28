@@ -1,0 +1,15 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+{% for new in news %}
+  <li>{{ new.news }}</li>
+{% empty %}
+  暂时没有消息
+{% endfor %}
+
+{% endblock content %}

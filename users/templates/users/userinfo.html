@@ -3,14 +3,10 @@
 
 {% block header %}
   
-{% if page_userinfo.sex == '男' %}
-  <h3 style="margin-top: 0px;">他:</h3>
-{% else %}
-  <h4 style="margin-top: 0px;">她:</h4>
-{% endif %}
+  
 {% if user == page_user %}
   <p style="margin-bottom:1px " align="right">
-    <a href="{% url 'users:alterinfo' user.id %}"><button class="btn btn-default">修改信息</button></a>
+    <a href="{% url 'users:alterinfo' %}"><button class="btn btn-default">修改信息</button></a>
   </p>
 {% else %}
   <p style="margin-bottom:1px " align="right">
@@ -19,7 +15,7 @@
 	    <button class="btn btn-default">取消关注</button>
 	    {% else %}
 	    <button class="btn btn-default">关注</button>
-	    {% endif %}
+	    {% endif %}	
 	  </a>
   </p>
 {% endif %}
@@ -27,14 +23,24 @@
 {% endblock header %}
 
 {% block content %}
+
 <div class="col-md-5">
   <div class='panel panel-default'>
+  
+    <div style="border:1px padding:2px" class='text-center'>
+	  <img src="{{ page_userinfo.pic.url }}" alt='pic' height="80" width="80" />
+    </div>
+	
 	<div class='panel-body'>
+	  <div>
+	    <h4 class='text-center' style="margin-top: 0px;">{{page_user.username}}</h4>
+	  </div>
 	  <form method='post' class='form' enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form info_read_form %}
-       </form>
+      </form>
     </div>
+	
   </div>
 </div>
 
@@ -53,4 +59,5 @@
 	</h4>
   </div>
 </div>
+
 {% endblock content %}

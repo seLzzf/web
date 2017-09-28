@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 {% block header %}
 <div>
-  <h4>留言板:</h4>
+  <h4>留言板:<small>&nbsp ***留言删除方法与其他删除方法相同,暂未完善.***</small></h4>
   {% if user == page_user %}
     {% if T_M.设为私密 %}
 	  当前权限:仅自己可见<a href="{% url 'message:message_privacy' %}" style="float:right;">设为公开</a>

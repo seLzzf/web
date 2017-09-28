@@ -20,13 +20,12 @@ class UserProfileForm(ModelForm):
 class UserProfileForm_read(ModelForm):
 	class Meta:
 		model=Userinfo
-		fields=['birthday','sex','school','autograph','pic']
+		fields=['birthday','sex','school','autograph']
 		widgets={
 			'birthday':TextInput(attrs={'readonly':'readonly'}),
 			'sex':TextInput(attrs={'readonly':'readonly'}),
 			'school':TextInput(attrs={'readonly':'readonly'}),
 			'autograph':TextInput(attrs={'readonly':'readonly'}),
-			'pic':TextInput(attrs={'readonly':'readonly'}),
 		}
 
 class EmailConfirmForm(Form):

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login,logout,authenticate 
-from .models import Userinfo,YZM,Follower
+from .models import Userinfo,YZM,Follower,News
 from blogs.models import Theme
 from django.contrib.auth.models import User
 from .forms import UserForm,UserProfileForm,EmailConfirmForm,UserProfileForm_read
@@ -93,22 +93,29 @@ def ff_list(request,user_id):
 	else:
 		return HttpResponse('some errors')
 	return render(request,'users/ff_list.html',context)
-def alterinfo(request,user_id):
-	user=User.objects.get(id=user_id)
-	page_user=user
+def alterinfo(request):
+	page_user=request.user
 	if request.method!='POST':
-		User.objects.get(id=user_id)
-		userinfo=Userinfo.objects.get(user=user)
+		userinfo=Userinfo.objects.get(user=page_user)
 		infoform=UserProfileForm(instance=userinfo)
 		context={'infoform':infoform,'page_user':page_user}
 		return render(request,'users/alterinfo.html',context)
 	else:
-		userinfo=Userinfo.objects.get(user=user)
+		userinfo=Userinfo.objects.get(user=page_user)
 		form=UserProfileForm(request.POST,request.FILES,instance=userinfo)
 		if form.is_valid():
 			form.save()
 		return HttpResponseRedirect(reverse('blogs:index'))
-
+def news(request):
+	page_user=request.user
+	news=News.objects.filter(user=page_user)
+	news_unread=News.objects.filter(user=page_user,status=True)
+	if news_unread:
+		for new_unread in news_unread:
+			new_unread.status=False
+			new_unread.save()
+	context={'page_user':page_user,'news':news}
+	return render(request,'users/news.html',context)
 def regsuc(request):
 	return render(request,'users/regsuc.html')
 def follow(request,user_id):
