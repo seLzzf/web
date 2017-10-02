@@ -37,7 +37,7 @@ def register(request):
 			Userinfo.objects.create(user=user)
 			user_id=user.id
 			try:
-				send_mail('欢迎注册seLzzf的网站','欢迎注册seLzzf的网站,您的注册验证码是: '+str(email_num)+' .','271938333@qq.com',[email],fail_silently=False)
+				send_mail('欢迎注册zz的网站','欢迎注册zz的网站,您的注册验证码是: '+str(email_num)+' .','271938333@qq.com',[email],fail_silently=False)
 			except:
 				user.delete()
 				return HttpResponse('some errors')
