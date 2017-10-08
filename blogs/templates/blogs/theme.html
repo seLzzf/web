@@ -52,7 +52,7 @@
 	  </h4>
     </div>
     <div class='panel-heading'>
-	   ——<a href="{% url 'users:userinfo' comment.publisher.id %}">{{comment.publisher}}</a>
+	   <a href="{% url 'users:userinfo' comment.publisher.id %}">{{comment.publisher}}</a>
       <div style="float:right;">{{comment.date_added|date:'Y-m-d H:i:s'}}
 	  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  {% if page_user == request_user %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -12,15 +12,6 @@ from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-def get_request_user(request):
-	user=request.user
-	userinfo=Userinfo.objects.get(user=user)
-	return user,userinfo
-def get_page_user(request,user_id):
-	user=User.objects.get(id=user_id)
-	userinfo=Userinfo.objects.get(user=user)
-	return user,userinfo
-
 @login_required
 def index(request):
 	try:
@@ -29,22 +20,18 @@ def index(request):
 	except:
 		themes=Theme.objects.filter(设为私密=False).order_by('-date_added')
 	page_user=request.user
-	request_userinfo=Userinfo.objects.get(user=page_user)
-	context={'themes':themes,'page_user':page_user,'request_userinfo':request_userinfo}
+	context={'themes':themes,'page_user':page_user}
 	return render(request,'blogs/index.html',context)
 @login_required
 def themes(request,user_id):
-	request_user,request_userinfo=get_request_user(request)
-	try:
-		page_user,page_userinfo=get_page_user(request,user_id)
-	except:
-		return HttpResponse('手动404。')
+	request_user=request.user
+	page_user=get_object_or_404(User,id=user_id)
 	if theme:
 		if page_user==request_user:
 			themes=Theme.objects.filter(owner=request.user).order_by('date_added') 
 		else:
 			themes=Theme.objects.filter(owner=page_user,设为私密=False).order_by('date_added')
-	context={'themes':themes,'page_user':page_user,'request_user':request_user,'request_userinfo':request_userinfo}
+	context={'themes':themes,'page_user':page_user,'request_user':request_user}
 	return render(request,'blogs/themes.html',context)
 @login_required
 def theme(request,user_id,theme_id):
@@ -56,11 +43,8 @@ def theme(request,user_id,theme_id):
 			return HttpResponse(praises)
 		except:
 			return HttpResponse('主题不存在')
-	request_user,request_userinfo=get_request_user(request)
-	try:
-		page_user,page_userinfo=get_page_user(request,user_id)
-	except:
-		return HttpResponse('手动404。')
+	request_user=request.user
+	page_user=get_object_or_404(User,id=user_id)
 	try:
 		theme=Theme.objects.get(id=theme_id)
 		theme.increase_views()
@@ -85,7 +69,7 @@ def theme(request,user_id,theme_id):
 	    #comment
 	comments_pages=Paginator(comments,5)
 	page_num_comments=request.GET.get('page_c')
-	context={'theme':theme,'page_user':page_user,'request_user':request_user,request_userinfo:'request_userinfo','comments':comments,'notes_page':notes_page,'notes_pages':notes_pages,'comment_form':comment_form}
+	context={'theme':theme,'page_user':page_user,'request_user':request_user,'comments':comments,'notes_page':notes_page,'notes_pages':notes_pages,'comment_form':comment_form}
 	return render(request,'blogs/theme.html',context)
 @login_required
 def new_theme(request):
