@@ -6,4 +6,4 @@ def request_userinfo(request):
 		request_userinfo=Userinfo.objects.get(user=user)
 		return {'request_userinfo':request_userinfo}
 	except:
-		return {'request_userinfo':'请登录'}
+		return {'request_userinfo':'请登录.'}
