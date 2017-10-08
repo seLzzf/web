@@ -15,4 +15,3 @@ class Message(models.Model):
 	私密留言=models.BooleanField(default=False)
 	def __str__(self):
 		return self.message
-

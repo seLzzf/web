@@ -28,4 +28,9 @@ if pic:
 userinfo.save()
 #关于用户表单
 UserCreationForm中自带两个密码框
+#session相关
+request.session['x']='y'
+request.session.get('x')
+#基于类...
+**kwargs接受关键字参数并形成一个名为'kwargs'的字典，可在函数中使用。
 #

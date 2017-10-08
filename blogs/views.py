@@ -69,7 +69,7 @@ def theme(request,user_id,theme_id):
 	if theme.设为私密==True:
 		if theme.owner!=request_user:
 			return Http404
-	notes=Note.objects.filter(title=theme).order_by('-date_added')
+	notes=Note.objects.filter(title=theme).order_by('date_added')
 	comment_form=CommentForm()
 	comments=theme.comment_set.order_by('date_added')
 	#分页:

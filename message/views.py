@@ -34,7 +34,7 @@ def message(request,user_id):
 		context={'request_user':request_user,'page_user':page_user,'T_M':T_M,'messages':messages,'message_form':message_form}
 		return render(request,'message/message.html',context)
 		
-def message_privacy(request,):
+def message_privacy(request):
 	user=request.user
 	T_M=To_Message.objects.get(owner=user)
 	if T_M.设为私密:
@@ -45,3 +45,12 @@ def message_privacy(request,):
 		T_M.save()
 	context={'page_user':user,}
 	return render(request,'blogs/privacysuc.html',context)
+	
+def message_delete(request,user_id,message_id):
+	msg=Message.objects.get(id=message_id)
+	page_user=User.objects.get(id=user_id)
+	if request.user == msg.giver or request.user == page_user:
+		msg.delete()
+		return HttpResponseRedirect(reverse('message:message',args=[page_user.id]))
+	else:
+		return

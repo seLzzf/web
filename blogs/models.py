@@ -5,6 +5,7 @@ class Theme(models.Model):
 	owner=models.ForeignKey(User)
 	title=models.CharField('标题',max_length=20)
 	date_added=models.DateTimeField(auto_now_add=True)
+	date_updated=models.DateTimeField(auto_now=True)
 	设为私密=models.BooleanField(default=False)
 	views=models.PositiveIntegerField(default=0)
 	praises=models.PositiveIntegerField(default=0)
