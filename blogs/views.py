@@ -11,28 +11,61 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.views.generic import ListView
 
-@login_required
-def index(request):
-	try:
-		sort=request.GET['sort']
-		themes=Theme.objects.filter(设为私密=False).order_by('-'+sort)
-	except:
-		themes=Theme.objects.filter(设为私密=False).order_by('-date_added')
-	page_user=request.user
-	context={'themes':themes,'page_user':page_user}
-	return render(request,'blogs/index.html',context)
+# @login_required
+# def index(request):
+	# try:
+		# sort=request.GET['sort']
+		# themes=Theme.objects.filter(设为私密=False).order_by('-'+sort)
+	# except:
+		# themes=Theme.objects.filter(设为私密=False).order_by('-date_added')
+	# page_user=request.user
+	# context={'themes':themes,'page_user':page_user}
+	# return render(request,'blogs/index.html',context)
+
+class IndexView(ListView): #基于类的视图
+	model=Theme
+	template_name='blogs/index.html'
+	context_object_name='themes'
+	def get_queryset(self):
+		try:
+			sort=self.request.GET['sort']
+			return super().get_queryset().filter(设为私密=False).order_by('-'+sort)
+		except:
+			return super().get_queryset().filter(设为私密=False).order_by('-date_added')
+	def get_context_data(self,**kwargs):
+		context=super().get_context_data(**kwargs)
+		page_user=self.request.user
+		context.update({'page_user':page_user})
+		return context
+
 @login_required
 def themes(request,user_id):
 	request_user=request.user
 	page_user=get_object_or_404(User,id=user_id)
-	if theme:
-		if page_user==request_user:
-			themes=Theme.objects.filter(owner=request.user).order_by('date_added') 
-		else:
-			themes=Theme.objects.filter(owner=page_user,设为私密=False).order_by('date_added')
+	if page_user==request_user:
+		themes=Theme.objects.filter(owner=request.user).order_by('date_added') 
+	else:
+		themes=Theme.objects.filter(owner=page_user,设为私密=False).order_by('date_added')
 	context={'themes':themes,'page_user':page_user,'request_user':request_user}
 	return render(request,'blogs/themes.html',context)
+	
+# class ThemesView(ListView):    #基于类
+	# model=Theme
+	# template_name='blogs/themes.html'
+	# context_object_name='themes'
+	# def get_context_data(self,**kwargs):
+		# context=super().get_context_data(**kwargs)
+		# request_user=self.request.user
+		# page_user=get_object_or_404(User,id=self.kwargs.get('user_id'))
+		# if page_user==request_user:
+			# themes=Theme.objects.filter(owner=request_user).order_by('date_added') 
+		# else:
+			# themes=Theme.objects.filter(owner=page_user,设为私密=False).order_by('date_added')
+		# context.update({'request_user':request_user,'themes':themes,'page_user':page_user})
+		# return context
+	
 @login_required
 def theme(request,user_id,theme_id):
 	if request.is_ajax():

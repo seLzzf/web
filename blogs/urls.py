@@ -1,11 +1,14 @@
 from django.conf.urls import url
 from . import views
 from django.contrib.auth.views import login
+from django.contrib.auth.decorators import login_required
 
 urlpatterns=[
 	url(r'^$',login,{'template_name':'users/login.html'},name='login'),
-	url(r'^index/$',views.index,name='index'),
+	# url(r'^index/$',views.index,name='index'),
+	url(r'^index/$',login_required(views.IndexView.as_view()),name='index'),
 	url(r'^themes/(?P<user_id>\d+)/$',views.themes,name='themes'),
+	# url(r'^themes/(?P<user_id>\d+)/$',views.ThemesView.as_view(),name='themes'),
 	url(r'^themes/(?P<user_id>\d+)/(?P<theme_id>\d+)/$',views.theme,name='theme'),
 	url(r'^new_theme/$',views.new_theme,name='new_theme'),
 	url(r'^new_note/(?P<theme_id>\d+)/$',views.new_note,name='new_note'),
