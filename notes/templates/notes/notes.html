@@ -1,0 +1,22 @@
+{% extends 'users/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+<div class="col-md-3 panel panel-default">
+  <div class='panel-body'>
+  {% for note in notes %}
+    <ul style="padding-left:0px;" ><a style='color:#777' href="?note={{note.id}}">{{ note.title }}</a></ul>
+  {% empty %}
+  {% endfor %}
+  </div>
+</div>
+
+<div class="col-md-9 panel">
+  <div class='panel-body'>
+    {{note.text|safe}}
+  </div>
+</div>
+{% endblock content %}
