@@ -78,15 +78,13 @@ def theme(request,user_id,theme_id):
 			return HttpResponse('主题不存在')
 	request_user=request.user
 	page_user=get_object_or_404(User,id=user_id)
-	try:
-		theme=Theme.objects.get(id=theme_id)
-		theme.increase_views()
-	except:
-		return HttpResponse('手动404。')
+	theme=get_object_or_404(Theme,id=theme_id)
+	theme.increase_views()
 	if theme.设为私密==True:
 		if theme.owner!=request_user:
 			return Http404
 	notes=Note.objects.filter(title=theme).order_by('date_added')
+	
 	comment_form=CommentForm()
 	comments=theme.comment_set.order_by('date_added')
 	#分页:

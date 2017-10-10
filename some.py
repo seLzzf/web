@@ -34,4 +34,5 @@ request.session.get('x')
 #基于类...
 def get_queryset(self):
     cate = get_object_or_404(Category, pk=self.kwargs.get('pk'))
-#
+#显示用户上传图片
++static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

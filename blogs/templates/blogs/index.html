@@ -20,10 +20,10 @@
 	  {% for theme in themes %}
 	  <tr>
 		<td>
-		  <a href="{% url 'blogs:theme' theme.owner.id theme.id %}">{{theme.title}}</a>
+		  <a style='color:#777' href="{% url 'blogs:theme' theme.owner.id theme.id %}">{{theme.title}}</a>
 		</td>
 		<td>
-		  <a href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
+		  <a style='color:#777' href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
 		</td>
 		<td>
 		  <img src="{% static 'images/views.jpg' %}"/>{{theme.views}}
