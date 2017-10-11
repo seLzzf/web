@@ -1,6 +1,8 @@
 import requests,io,sys,bs4,time
 from bs4 import BeautifulSoup
+# coding:UTF-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
+
 
 def prepare_for_get():
 	url='http://war3.uuu9.com/'
@@ -38,4 +40,12 @@ def storage_list():
 			file.write(str(n)+'\n')
 		file.close()
 
-storage_list()
+# storage_list()
+
+import chardet
+root=sys.path[0]+'/map_list.txt'
+lists=[]
+with open(root,'r') as f:
+	str_all=f.readlines()
+	print(chardet.detect(str_all))
+	f.close()

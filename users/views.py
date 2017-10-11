@@ -8,8 +8,10 @@ from blogs.models import Theme
 from django.contrib.auth.models import User
 from .forms import UserForm,UserProfileForm,EmailConfirmForm,UserProfileForm_read
 from PIL import Image
-import random,sys
+import random,sys,io
 from django.core.mail import send_mail
+# coding:UTF-8
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
 
 def Storage_pic(request):
 	name=request.user.id+'.jpg'
