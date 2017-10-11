@@ -10,7 +10,7 @@ from .forms import UserForm,UserProfileForm,EmailConfirmForm,UserProfileForm_rea
 from PIL import Image
 import random,sys,io
 from django.core.mail import send_mail
-
+#coding=utf-8
 
 def Storage_pic(request):
 	name=request.user.id+'.jpg'
@@ -68,7 +68,7 @@ def register_confirm(request):
 def some_works(request):
 	root=sys.path[0]+'/users/map_list.txt'
 	lists=[]
-	with open(root,'r',encoding='gb18030') as f:
+	with open(root,'r',encoding='utf-8') as f:
 		str_all=f.readlines()
 		f.close()
 	for str in str_all:
