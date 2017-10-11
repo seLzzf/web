@@ -8,7 +8,7 @@ from blogs.models import Theme
 from django.contrib.auth.models import User
 from .forms import UserForm,UserProfileForm,EmailConfirmForm,UserProfileForm_read
 from PIL import Image
-import random
+import random,sys
 from django.core.mail import send_mail
 
 def Storage_pic(request):
@@ -65,8 +65,14 @@ def register_confirm(request):
 			user.delete()
 			return HttpResponse('验证码有误，请检查输入，或重新发送。')
 def some_works(request):
-	from .war3_daily_map import get_map
-	lists=get_map()
+	root=sys.path[0]+'/users/map_list.txt'
+	lists=[]
+	with open(root,'r') as f:
+		str_all=f.readlines()
+		f.close()
+	for str in str_all:
+		list=str.split(',')
+		lists.append(list)
 	context={'lists':lists}
 	return render(request,'users/some_works.html',context)
 def userinfo(request,user_id):
