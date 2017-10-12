@@ -45,7 +45,7 @@ def themes(request,user_id):
 	request_user=request.user
 	page_user=get_object_or_404(User,id=user_id)
 	if page_user==request_user:
-		themes=Theme.objects.filter(owner=request.user).order_by('date_added') 
+		themes=Theme.objects.filter(owner=request.user).order_by('date_added')
 	else:
 		themes=Theme.objects.filter(owner=page_user,设为私密=False).order_by('date_added')
 	context={'themes':themes,'page_user':page_user,'request_user':request_user}

@@ -30,9 +30,9 @@ def get_map():
 		a=date+','+title+','+url+','+type
 		list.append(a)
 	return list
+	
 def storage_list():
 	list=get_map() #接收列表
-	
 	root=sys.path[0]+'/map_list.txt'
 	with open(root,'w') as file:
 		for n in list:

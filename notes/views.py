@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Notes
 
 def notes(request):
-	notes=Notes.objects.all()
+	notes=Notes.objects.all().order_by('-date_setup')
 	try:
 		note_id=request.GET['note']
 		note=Notes.objects.get(id=note_id)
