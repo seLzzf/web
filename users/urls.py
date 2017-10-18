@@ -14,5 +14,6 @@ urlpatterns=[
 	url(r'^alterinfo/$',views.alterinfo,name='alterinfo'),
 	url(r'^regsuc/$',views.regsuc,name='regsuc'),
 	url(r'^follow/(?P<user_id>\d+)/$',views.follow,name='follow'),
+	url(r'^favorite_list/(?P<user_id>\d+)/$',views.favorite_list,name='favorite_list'),
 	
 ]

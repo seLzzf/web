@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from blogs.models import Theme
 
 class Userinfo(models.Model):
 	user=models.OneToOneField(User)
@@ -29,3 +30,7 @@ class News(models.Model):
 	news=models.TextField('消息',blank=True)
 	status=models.BooleanField(default=True)
 	date_added=models.DateTimeField(auto_now_add=True,blank=True)
+
+class Favorites(models.Model):
+	user=models.ForeignKey(User)
+	theme=models.ForeignKey(Theme)

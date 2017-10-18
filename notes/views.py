@@ -7,7 +7,7 @@ def notes(request):
 		note_id=request.GET['note']
 		note=Notes.objects.get(id=note_id)
 	except:
-		note=Notes.objects.get(id=1)
+		note=notes[0]
 	import markdown
 	note.text=markdown.markdown(note.text,extensions=[
 						'markdown.extensions.extra',

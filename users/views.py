@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login,logout,authenticate 
-from .models import Userinfo,YZM,Follower,News
+from .models import Userinfo,YZM,Follower,News,Favorites
 from blogs.models import Theme
 from django.contrib.auth.models import User
 from .forms import UserForm,UserProfileForm,EmailConfirmForm,UserProfileForm_read
@@ -83,11 +83,12 @@ def userinfo(request,user_id):
 	info_read_form=UserProfileForm_read(instance=page_userinfo)
 	followers=Follower.objects.filter(focus=page_user)
 	focusers=Follower.objects.filter(follower=page_user)
+	favorites=Favorites.objects.filter(user=page_user)
 	try:
 		the_follower=Follower.objects.get(focus=page_user,follower=request.user)
 	except:
 		the_follower=False
-	context={'page_user':page_user,'themes':themes,'page_userinfo':page_userinfo,'info_read_form':info_read_form,'followers':followers,'the_follower':the_follower,'focusers':focusers}
+	context={'page_user':page_user,'themes':themes,'page_userinfo':page_userinfo,'info_read_form':info_read_form,'followers':followers,'the_follower':the_follower,'focusers':focusers,'favorites':favorites}
 	return render(request,'users/userinfo.html',context)
 def ff_list(request,user_id):
 	page_user=User.objects.get(id=user_id)
@@ -134,3 +135,8 @@ def follow(request,user_id):
 	except:
 		Follower.objects.create(focus=page_user,follower=user)
 	return HttpResponseRedirect(reverse('users:userinfo',args=[page_user.id]))
+def favorite_list(request,user_id):
+	page_user=User.objects.get(id=user_id)
+	favorites=Favorites.objects.filter(user=page_user)
+	context={'favorites':favorites,'page_user':page_user}
+	return render(request,'users/favorite_list.html',context)

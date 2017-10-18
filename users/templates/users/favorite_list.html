@@ -1,0 +1,17 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap3 %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+
+{% for favorite in favorites %}
+{{favorite}}
+{% empty %}
+<h4>没有任何收藏</h4>
+{% endfor %}
+
+
+
+{% endblock content %}
