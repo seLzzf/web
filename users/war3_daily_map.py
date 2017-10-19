@@ -40,3 +40,4 @@ def storage_list():
 		file.close()
 
 storage_list()
+print('完成')
