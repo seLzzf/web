@@ -1,8 +1,10 @@
 {% extends 'users/base.html' %}
 {% load bootstrap3 %}
+{% load static %}
+<script src="{% static 'js/test.js' %}"></script>
 
 {% block header %}
-  <h3>注册帐号:<h3><small>*** 因学习建立网站时环境配置失误,此注册界面本地为中文,但无法上传到服务器 ***</small>
+  <h3>注册帐号:<h3>
 {% endblock header %}
 
 {% block content %}
@@ -10,10 +12,22 @@
 <form method='post' action="{% url 'users:register' %}" class='form' enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form user_form %}
+  
+  <label>邮箱地址</label>        <br/>
+  <input id='email_num' class="form-control" type='email' name='email' placeholder='输入邮箱' />      <br/>
+  
+  <input class="form" type='text' maxlength=6 name='email_num' placeholder='邮箱验证码' /> 
+  
+  <input id='send_email' class="btn" type='button' value='发送邮件' />
+  
+  
   {% buttons %}
     <button name='submit' class='btn btn-primary'>注册</button>
   {% endbuttons %}
   <input type='hidden' name='next' value="{% url 'users:regsuc' %}">
 </form>
 </div>
+
+<script src="{% static 'js/test.js' %}"></script>
+
 {% endblock content %}

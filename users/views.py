@@ -25,46 +25,33 @@ def logout_views(request):
 def register(request):
 	if request.method!='POST':
 		user_form=UserForm()
-		profile_form=UserProfileForm()
+		context={'user_form':user_form}
 	else:
 		user_form=UserForm(data=request.POST)
 		if user_form.is_valid():
-			user=user_form.save()
-			user.is_active=False
-			user.save()
-			
-			email=request.POST.get('email')
-			email_num=random.randint(100000,999999)
-			Userinfo.objects.create(user=user)
-			user_id=user.id
+			email=request.POST['email']
+			email_num=request.POST['email_num']
 			try:
-				send_mail('欢迎注册zz的网站','欢迎注册zz的网站,您的注册验证码是: '+str(email_num)+' .','271938333@qq.com',[email],fail_silently=False)
+				email_sql=YZM.objects.get(email=email)
 			except:
-				user.delete()
-				return HttpResponse('some errors')
-			YZM.objects.create(user=user,yzm=email_num)
-			form=EmailConfirmForm()
-			context={'user_id':user_id,'form':form}
-			return render(request,'users/register_confirm.html',context)
-		else:
-			print('some errors')
-	context={'user_form':user_form}
-	return render(request,'users/register.html',context)
-def register_confirm(request):
-	if request.method=='POST':
-		yzm=request.POST.get('emailnum_input')
-		user_id=request.POST.get('user_id')
-		user=User.objects.get(id=user_id)
-		YZM_obj=YZM.objects.get(user=user)
-		email_num=YZM_obj.yzm
-		if yzm==str(email_num):
+				return HttpResponse('同一个邮箱只能注册一个帐号!')
+			user=user_form.save()
+			user.email=email
 			user.is_active=True
 			user.save()
-			YZM_obj.delete()
-			return HttpResponseRedirect(reverse('users:regsuc'))
-		else:
-			user.delete()
-			return HttpResponse('验证码有误，请检查输入，或重新发送。')
+			Userinfo.objects.create(user=user)
+			return render(request,'users/regsuc.html')
+	return render(request,'users/register.html',context)
+
+def register_confirm(request):
+	email=request.GET['email']
+	email_num=random.randint(100000,999999)
+	try:
+		send_mail('欢迎注册zz的网站','欢迎注册zz的网站,您的注册验证码是: '+str(email_num)+' .','271938333@qq.com',[email],fail_silently=False)
+	except:
+		return HttpResponse('发生了一些未知的错误...')
+	YZM.objects.create(email=email,yzm=email_num)
+	
 def some_works(request):
 	root=sys.path[0]+'/users/map_list.txt'
 	lists=[]

@@ -7,8 +7,8 @@ class UserinfoAdmin(admin.ModelAdmin):
 admin.site.register(Userinfo,UserinfoAdmin)
 
 class YZMAdmin(admin.ModelAdmin):
-	list_display=('user','yzm')
-	search_fields=('user',)
+	list_display=('email','yzm')
+	search_fields=('email',)
 admin.site.register(YZM,YZMAdmin)
 
 class FollowerAdmin(admin.ModelAdmin):

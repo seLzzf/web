@@ -15,7 +15,7 @@ class Userinfo(models.Model):
 		return self.user.username
 
 class YZM(models.Model):
-	user=models.OneToOneField(User)
+	email=models.EmailField(blank=True)
 	yzm=models.IntegerField(blank=True,default=123456)
 	
 	def __str__(self):
