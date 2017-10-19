@@ -7,8 +7,12 @@
   <li style='display:inline-block'>浏览:{{theme.views}} &nbsp </li>
   <li style='display:inline-block'>评论:{{comments.count}} &nbsp </li>
   <li id='praise' style='display:inline-block'>点赞数:{{theme.praises}}</li>
-  <a><img style="float:right;" id='favorite' src="{% static 'images/favorite1.png' %}"/></a>
-  <a><img style="float:right;padding-right:15px" id='praise_pic' src="{% static 'images/praise1.png' %}"/></a>
+  {% if is_favo %}
+  <a><img style="float:right;" id='favorite' src="{% static 'images/favorite2.png' %} " alt='is' /></a>
+  {% else %}
+  <a><img style="float:right;" id='favorite' src="{% static 'images/favorite1.png' %}" alt='isnot' /></a>
+  {% endif %}
+  <img style="float:right;padding-right:15px" id='praise_pic' src="{% static 'images/praise1.png' %}"/>
   </h4>
   
 {% endblock header %}

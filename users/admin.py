@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import Userinfo,YZM,Follower,News
+from users.models import Userinfo,YZM,Follower,News,Favorites
 
 class UserinfoAdmin(admin.ModelAdmin):
 	list_display=('user','sex','birthday')
@@ -20,3 +20,8 @@ class NewsAdmin(admin.ModelAdmin):
 	list_display=('user','status')
 	search_fields=('user','status',)
 admin.site.register(News,NewsAdmin)
+
+class FavoriteAdmin(admin.ModelAdmin):
+	list_display=('user','theme')
+	search_fields=('user','theme',)
+admin.site.register(Favorites,FavoriteAdmin)

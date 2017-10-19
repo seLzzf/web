@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from .models import Theme,Note
-from users.models import Userinfo
+from users.models import Userinfo,Favorites
 from comments.models import Comment
 from .forms import NoteForm,ThemeForm
 from comments.forms import CommentForm
@@ -68,18 +68,11 @@ def themes(request,user_id):
 	
 @login_required
 def theme(request,user_id,theme_id):
-	if request.is_ajax():
-		try:
-			theme=Theme.objects.get(id=theme_id)
-			theme.increase_praises()
-			praises=theme.praises
-			return HttpResponse(praises)
-		except:
-			return HttpResponse('主题不存在')
 	request_user=request.user
 	page_user=get_object_or_404(User,id=user_id)
 	theme=get_object_or_404(Theme,id=theme_id)
 	theme.increase_views()
+	
 	if theme.设为私密==True:
 		if theme.owner!=request_user:
 			return Http404
@@ -100,7 +93,14 @@ def theme(request,user_id,theme_id):
 	    #comment
 	comments_pages=Paginator(comments,5)
 	page_num_comments=request.GET.get('page_c')
-	context={'theme':theme,'page_user':page_user,'request_user':request_user,'comments':comments,'notes_page':notes_page,'notes_pages':notes_pages,'comment_form':comment_form}
+	
+	try:
+		favorite=Favorites.objects.get(user=request_user,theme=theme)
+		is_favo=True
+	except:
+		is_favo=False
+	
+	context={'theme':theme,'page_user':page_user,'request_user':request_user,'comments':comments,'notes_page':notes_page,'notes_pages':notes_pages,'comment_form':comment_form,'is_favo':is_favo}
 	return render(request,'blogs/theme.html',context)
 @login_required
 def new_theme(request):
@@ -168,6 +168,26 @@ def search(request):
 	user_id_list=User.objects.filter(Q(id__icontains=search))
 	context={'theme_list':theme_list,'user_list':user_list,'page_user':page_user,'user_id_list':user_id_list}
 	return render(request,'blogs/search.html',context)
+def give_praise(request,user_id,theme_id):
+	if request.is_ajax():
+		try:
+			theme=Theme.objects.get(id=theme_id)
+			theme.increase_praises()
+			praises=theme.praises
+			return HttpResponse(praises)
+		except:
+			return HttpResponse('主题不存在')
+def get_favorite(request,user_id,theme_id):
+	if request.is_ajax():
+		user=request.user
+		theme=Theme.objects.get(id=theme_id)
+		try:
+			favorite=Favorites.objects.get(user=user,theme=theme)
+			favorite.delete()
+			return HttpResponse('取消收藏!')
+		except:
+			Favorites.objects.create(user=user,theme=theme)
+			return HttpResponse('收藏成功!')
 	
 def test(request):
 	user=request.user

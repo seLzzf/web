@@ -16,5 +16,7 @@ urlpatterns=[
 	url(r'^delete_note/(?P<theme_id>\d+)/(?P<note_id>\d+)/$',views.delete_note,name='delete_note'),
 	url(r'^(?P<theme_id>\d+)/privacy/$',views.privacy,name='privacy'),
 	url(r'^search/$',views.search,name='search'),
+	url(r'^themes/(?P<user_id>\d+)/(?P<theme_id>\d+)/give_praise/$',views.give_praise,name='give_praise'),
+	url(r'^themes/(?P<user_id>\d+)/(?P<theme_id>\d+)/get_favorite/$',views.get_favorite,name='get_favorite'),
 	url(r'^test/$',views.test,name='test'),
 ]

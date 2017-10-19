@@ -7,7 +7,7 @@
 {% block content %}
 
 {% for favorite in favorites %}
-{{favorite}}
+<a href="{% url 'blogs:theme' page_user.id favorite.theme.id %}">{{favorite.theme}}</a>
 {% empty %}
 <h4>没有任何收藏</h4>
 {% endfor %}

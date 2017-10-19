@@ -29,7 +29,7 @@ function getHTTPObject(){
 function give_praise(){
 	var request=getHTTPObject();
 	if (request) {
-		request.open('GET',this.location.href,true);
+		request.open('GET',this.location.href+'give_praise',true);
 		request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 		request.onreadystatechange=function(){
 			if(request.readyState==4){
@@ -45,8 +45,37 @@ function give_praise(){
 	};
 }
 
+function get_favorite(){
+	var request=getHTTPObject();
+	if (request) {
+		request.open('GET',this.location.href+'get_favorite/',true);
+		request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+		request.onreadystatechange=function(){
+			if(request.readyState==4){
+				var favorite_pic=document.getElementById('favorite');
+				is_favo=favorite_pic.getAttribute('alt');
+				if(is_favo=='is'){
+					favorite_pic.setAttribute('src',"/static/images/favorite1.png");
+					favorite_pic.setAttribute('alt',"is_not");
+				}else{
+					favorite_pic.setAttribute('src',"/static/images/favorite2.png");
+					favorite_pic.setAttribute('alt',"is");
+				};
+				alert(request.responseText);
+			}
+		};
+		request.send(null);
+	}else{
+		alert('你的浏览器不支持ajax');
+	};
+}
+
 praise=document.getElementById('praise_pic')
 praise.onclick=function(){
 	give_praise();
+}
+favorite=document.getElementById('favorite')
+favorite.onclick=function(){
+	get_favorite();
 }
 
