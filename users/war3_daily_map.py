@@ -34,7 +34,7 @@ def get_map():
 def storage_list():
 	list=get_map() #接收列表
 	root=sys.path[0]+'/map_list.txt'
-	with open(root,'w') as file:
+	with open(root,'w',encoding='utf-8') as file:
 		for n in list:
 			file.write(str(n)+'\n')
 		file.close()
