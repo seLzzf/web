@@ -26,12 +26,15 @@
 	  
 	  <div id='navbar' class='navbar-collapse collapse'>
 	    <ul class='nav navbar-nav'>
-		  <li><a href="{% url 'blogs:themes' page_user.id %}">主题</a></li>
+		  <li><a href="{% url 'blogs:themes' page_user.id %}">我的主题</a></li>
 		  {% if user == page_user %}
 		  <li><a href="{% url 'action:action' user.id %}">我的关注</a></li>
 		  {% endif %}
 		  <li><a href="{% url 'message:message' page_user.id %}">留言板</a></li>
 		  <li><a href="{% url 'blogs:test' %}">test</a></li>
+		  {% if user.is_superuser %}
+		    <li><a class='navbar-brand' href="{% url 'notes:notes' %}">学习笔记</a></li>
+		  {% endif %}
 		  <li style='margin-top:10px' class='search'> 
 		    <form method='post' action="{% url 'blogs:search' %}">
 			{% csrf_token %}

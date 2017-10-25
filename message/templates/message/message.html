@@ -24,8 +24,12 @@
     <div class='panel-heading'>
 	  <a href="{% url 'users:userinfo' message.giver.id %}">{{message.giver}}</a>
 	  <span style="float:right;">
-        {{message.date_added|date:'Y-m-d H:i:s'}}&nbsp&nbsp&nbsp
-	    &nbsp&nbsp
+	    {% if message.私密留言 %}
+		  仅彼此可见
+		{% endif %}
+		&nbsp&nbsp&nbsp&nbsp&nbsp
+        {{message.date_added|date:'Y-m-d H:i:s'}}
+		&nbsp&nbsp&nbsp&nbsp&nbsp
 	    {% if page_user == request_user %}
 	      <a href="{% url 'message:message_delete' page_user.id message.id %}">删除</a>
 	    {% endif %}

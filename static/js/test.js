@@ -26,6 +26,7 @@ function getHTTPObject(){
 	return new XMLHttpRequest();
 }
 
+// 点赞
 function give_praise(){
 	var request=getHTTPObject();
 	if (request) {
@@ -45,6 +46,7 @@ function give_praise(){
 	};
 }
 
+// 收藏
 function get_favorite(){
 	var request=getHTTPObject();
 	if (request) {
@@ -70,20 +72,6 @@ function get_favorite(){
 	};
 }
 
-$(function(){
-	$('#send_email').click(function(){
-		
-		var email=$('#email_num').val();
-		var btn=$('#send_email').attr('class','btn disabled');
-		$.get('/users/register_confirm/',{'email':email},function(response){
-			alert('发送成功');
-		})
-		
-	});
-	
-	
-});
-
 praise=document.getElementById('praise_pic')
 praise.onclick=function(){
 	give_praise();
@@ -92,4 +80,15 @@ favorite=document.getElementById('favorite')
 favorite.onclick=function(){
 	get_favorite();
 }
+
+// 邮箱验证
+$(function(){
+	$('#send_email').click(function(){
+		var email=$('#email_num').val();
+		var btn=$('#send_email').attr('class','btn disabled');
+		$.get('/users/register_confirm/',{'email':email},function(response){
+			alert('发送成功');
+		})
+	});
+});
 

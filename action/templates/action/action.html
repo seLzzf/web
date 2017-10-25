@@ -5,17 +5,25 @@
 {% endblock header %}
 
 {% block content %}
-<div>
+<div class="col-md-7">
 {% for theme in themes %}
   <h3>
   <li>
-    <a href="{% url 'blogs:theme' theme.owner.id theme.id %}">{{theme}}</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <a href="{% url 'users:userinfo' theme.owner.id %}">{{theme.owner}}</a>
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{theme.date_added|date:'m-d H:i'}}
+    <a href="{% url 'blogs:theme' theme.owner.id theme.id %}">
+	  {{theme}}
+	</a>
+	<div style="float:right;" >
+	  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  {{theme.date_added|date:'m-d H:i'}}
+	</div>
+    <a style="float:right;" href="{% url 'users:userinfo' theme.owner.id %}">
+	  {{theme.owner}}
+	</a>
   </li>
   </h3>
 {% endfor %}
 </div>
+
 
 
 {% endblock content %}

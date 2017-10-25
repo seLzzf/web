@@ -13,32 +13,32 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.generic import ListView
 
-# @login_required
-# def index(request):
-	# try:
-		# sort=request.GET['sort']
-		# themes=Theme.objects.filter(设为私密=False).order_by('-'+sort)
-	# except:
-		# themes=Theme.objects.filter(设为私密=False).order_by('-date_added')
-	# page_user=request.user
-	# context={'themes':themes,'page_user':page_user}
-	# return render(request,'blogs/index.html',context)
+@login_required
+def index(request):
+	try:
+		sort=request.GET['sort']
+		themes=Theme.objects.filter(设为私密=False).order_by('-'+sort)
+	except:
+		themes=Theme.objects.filter(设为私密=False).order_by('-date_added')
+	page_user=request.user
+	context={'themes':themes,'page_user':page_user}
+	return render(request,'blogs/index.html',context)
 
-class IndexView(ListView): #基于类的视图
-	model=Theme
-	template_name='blogs/index.html'
-	context_object_name='themes'
-	def get_queryset(self):
-		try:
-			sort=self.request.GET['sort']
-			return super().get_queryset().filter(设为私密=False).order_by('-'+sort)
-		except:
-			return super().get_queryset().filter(设为私密=False).order_by('-date_added')
-	def get_context_data(self,**kwargs):
-		context=super().get_context_data(**kwargs)
-		page_user=self.request.user
-		context.update({'page_user':page_user})
-		return context
+# class IndexView(ListView): #基于类的视图
+	# model=Theme
+	# template_name='blogs/index.html'
+	# context_object_name='themes'
+	# def get_queryset(self):
+		# try:
+			# sort=self.request.GET['sort']
+			# return super().get_queryset().filter(设为私密=False).order_by('-'+sort)
+		# except:
+			# return super().get_queryset().filter(设为私密=False).order_by('-date_added')
+	# def get_context_data(self,**kwargs):
+		# context=super().get_context_data(**kwargs)
+		# page_user=self.request.user
+		# context.update({'page_user':page_user})
+		# return context
 
 @login_required
 def themes(request,user_id):
